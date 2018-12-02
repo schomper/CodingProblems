@@ -80,6 +80,29 @@ namespace ProblemsTestcases
             Assert.AreEqual(false, result);
         }
 
-        
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 120, 60, 40, 30, 24 })]
+        [TestCase(new int[] { 3, 2, 1 }, new int[] { 2, 3, 6 })]
+        public void ProductsExcludingElement_GivenExample_AllRight(int[] input, int[] expected)
+        {
+            int[] output = FirstTenProblems.ProductsExcludingElement(input);
+
+            for (var i = 0; i < input.Length; i++) 
+            {
+                Assert.AreEqual(expected[i], output[i]);
+            }
+        }
+
+        [TestCase]
+        public void ProductsExcludingElement_ContainsZero_AllRight()
+        {
+            int[] input = new int[] { 1, 2, 0, 4 };
+
+            int[] output = FirstTenProblems.ProductsExcludingElement(input);
+
+            Assert.AreEqual(0, output[0]);
+            Assert.AreEqual(0, output[1]);
+            Assert.AreEqual(1 * 2 * 4, output[2]);
+            Assert.AreEqual(0, output[3]);
+        }
     }
 }
