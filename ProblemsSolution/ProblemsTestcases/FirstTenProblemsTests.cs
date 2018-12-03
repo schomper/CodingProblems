@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using ProblemsSolution;
+using ProblemsSolution.Utilities;
 using System;
 
 namespace ProblemsTestcases
@@ -103,6 +104,17 @@ namespace ProblemsTestcases
             Assert.AreEqual(0, output[1]);
             Assert.AreEqual(1 * 2 * 4, output[2]);
             Assert.AreEqual(0, output[3]);
+        }
+
+        [TestCase]
+        public void SerializeBinaryTree_ExampleTree()
+        {
+            BinaryTreeNode node = new BinaryTreeNode("root", new BinaryTreeNode("left", new BinaryTreeNode("left.left", null, null), null), new BinaryTreeNode("right", null, null));
+            string expected = "root=>(left=>(left.left=>-,-),-),(right=>-,-)";
+
+            string serialized = FirstTenProblems.SerializeBinaryTree(node);
+
+            Assert.AreEqual(expected, serialized);
         }
     }
 }

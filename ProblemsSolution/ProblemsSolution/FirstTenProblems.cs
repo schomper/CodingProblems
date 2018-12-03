@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ProblemsSolution.Utilities;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProblemsSolution
@@ -52,6 +54,55 @@ namespace ProblemsSolution
             }
 
             return solution;
+        }
+
+        /// <summary>
+        /// Given the root to a binary tree, implement serialize(root), which serializes the tree into a string, and deserialize(s), which deserializes the string back into the tree.
+        /// </summary>
+        /// <param name="root">The root node of a binary tree</param>
+        /// <returns></returns>
+        public static string SerializeBinaryTree(BinaryTreeNode root)
+        {
+            string treeRepresentation = $"{root.Value}=>";
+
+            if (root == null)
+            {
+                return treeRepresentation;
+            }
+
+            if (root.Left == null)
+            {
+                treeRepresentation += "-";
+            }
+            else
+            {
+                string leftNodeRepresentation = SerializeBinaryTree(root.Left);
+                treeRepresentation += $"({leftNodeRepresentation})";
+            }
+
+            treeRepresentation += ",";
+
+            if (root.Right == null)
+            {
+                treeRepresentation += "-";
+            }
+            else
+            {
+                string rightNodeRepresentation = SerializeBinaryTree(root.Right);
+                treeRepresentation += $"({rightNodeRepresentation})";
+            }
+
+            return treeRepresentation;
+        }
+
+        /// <summary>
+        /// Given the root to a binary tree, implement serialize(root), which serializes the tree into a string, and deserialize(s), which deserializes the string back into the tree.
+        /// </summary>
+        /// <param name="root">The root node of a binary tree</param>
+        /// <returns></returns>
+        public static BinaryTreeNode DeserializeBinaryTree(string treeRepresentation)
+        {
+            throw new NotImplementedException();
         }
     }
 }
