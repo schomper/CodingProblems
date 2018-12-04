@@ -63,7 +63,7 @@ namespace ProblemsSolution
         /// <returns></returns>
         public static string SerializeBinaryTree(BinaryTreeNode root)
         {
-            string treeRepresentation = $"{root.Value}=>";
+            string treeRepresentation = $"{root.Value}>";
 
             if (root == null)
             {
@@ -100,9 +100,52 @@ namespace ProblemsSolution
         /// </summary>
         /// <param name="root">The root node of a binary tree</param>
         /// <returns></returns>
+        /// "root>(left>(left.left>-,-),-),(right>-,-)";
         public static BinaryTreeNode DeserializeBinaryTree(string treeRepresentation)
         {
-            throw new NotImplementedException();
+            if (treeRepresentation == "-")
+            {
+                return null;
+            }
+
+            string[] split = treeRepresentation.Split('>', 2);
+            string value = split[0];
+            string subtree = split[1];
+
+            (string left, string right) = GetLeftAndRight(subtree);
+
+            BinaryTreeNode leftNode = DeserializeBinaryTree(left);
+            BinaryTreeNode rightNode = DeserializeBinaryTree(right);
+
+            return new BinaryTreeNode(value, leftNode, rightNode);
+        }
+
+        private static (string, string) GetLeftAndRight(string treeRepresentation)
+        {
+            int bracketCount = 0;
+            int splitIndex = -1;
+
+            for (int i = 0; i < treeRepresentation.Length; i++)
+            {
+                if (treeRepresentation[i] == '(')
+                {
+                    bracketCount++;
+                }
+                else if (treeRepresentation[i] == ')')
+                {
+                    bracketCount--;
+                }
+                else if (treeRepresentation[i] == ',' && bracketCount == 0)
+                {
+                    splitIndex = i;
+                    break;
+                }
+            }
+
+            string left = treeRepresentation.Substring(0, splitIndex);
+            string right = treeRepresentation.Substring(splitIndex+1);
+
+            return (left.Trim(new char[] { '(', ')' }), right.Trim(new char[] { '(', ')' }));
         }
     }
 }

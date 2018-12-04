@@ -110,11 +110,24 @@ namespace ProblemsTestcases
         public void SerializeBinaryTree_ExampleTree()
         {
             BinaryTreeNode node = new BinaryTreeNode("root", new BinaryTreeNode("left", new BinaryTreeNode("left.left", null, null), null), new BinaryTreeNode("right", null, null));
-            string expected = "root=>(left=>(left.left=>-,-),-),(right=>-,-)";
+            string expected = "root>(left>(left.left>-,-),-),(right>-,-)";
 
             string serialized = FirstTenProblems.SerializeBinaryTree(node);
 
             Assert.AreEqual(expected, serialized);
+        }
+
+        [TestCase]
+        public void DeserializeBinaryTree_ExampleTree()
+        {
+            string example = "root>(left>(left.left>-,left.left.right>-,-),-),(right>-,-)";
+            BinaryTreeNode node = FirstTenProblems.DeserializeBinaryTree(example);
+
+            Assert.AreEqual(node.Value, "root");
+            Assert.AreEqual(node.Left.Value, "left");
+            Assert.AreEqual(node.Left.Left.Value, "left.left");
+            Assert.AreEqual(node.Left.Left.Right.Value, "left.left.right");
+            Assert.AreEqual(node.Right.Value, "right");
         }
     }
 }
