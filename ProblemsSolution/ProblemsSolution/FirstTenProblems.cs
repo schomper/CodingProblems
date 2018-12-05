@@ -147,5 +147,62 @@ namespace ProblemsSolution
 
             return (left.Trim(new char[] { '(', ')' }), right.Trim(new char[] { '(', ')' }));
         }
+
+        /// <summary>
+        /// Given an array of integers, find the first missing positive integer in linear 
+        /// time and constant space. In other words, find the lowest positive integer that 
+        /// does not exist in the array. The array can contain duplicates and negative 
+        /// numbers as well.
+        /// </summary>
+        /// <param name="input">The array of integers</param>
+        /// <returns></returns>
+        public static int GetLowestMissingInt(int[] input)
+        {
+            int positiveArrayZero = SeparateNegatives(input);
+
+            for (int i = positiveArrayZero; i < input.Length; i++)
+            {
+                int indexValue = positiveArrayZero + Math.Abs(input[i]) - 1;
+
+                if (indexValue <= input.Length - 1)
+                {
+                    input[indexValue] = -input[indexValue];
+                }
+            }
+
+            for (int i = positiveArrayZero; i < input.Length; i++)
+            {
+                if (input[i] > 0)
+                {
+                    return i + 1 - positiveArrayZero;
+                }
+            }
+
+            return input.Length + 1 - positiveArrayZero;
+        }
+
+        /// <summary>
+        /// Move all the numbers less than 1 to one side of the array and 
+        /// return the index of the first number equal or larger than 1 
+        /// </summary>
+        /// <param name="input">The input array</param>
+        /// <returns>The index of the first non negative or non zero number</returns>
+        private static int SeparateNegatives(int[] input)
+        {
+            int lastPositive = 0;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] <= 0)
+                {
+                    int temp = input[lastPositive];
+                    input[lastPositive] = input[i];
+                    input[i] = temp;
+                    lastPositive++;
+                }
+            }
+
+            return lastPositive;
+        }
     }
 }

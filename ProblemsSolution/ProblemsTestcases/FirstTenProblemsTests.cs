@@ -129,5 +129,15 @@ namespace ProblemsTestcases
             Assert.AreEqual(node.Left.Left.Right.Value, "left.left.right");
             Assert.AreEqual(node.Right.Value, "right");
         }
+
+        [TestCase(new int[] { 3, 4, -1, 1}, 2)]
+        [TestCase(new int[] { 1, 2, 0 }, 3)]
+        [TestCase(new int[] { 1, 2, 3 }, 4)]
+        public void GetLowestMissingInt_ExampleTests(int[] input, int expected)
+        {
+            int value = FirstTenProblems.GetLowestMissingInt(input);
+
+            Assert.AreEqual(expected, value);
+        }
     }
 }
